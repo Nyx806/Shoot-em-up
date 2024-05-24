@@ -8,7 +8,7 @@ export class Wave{
         this.height = this.game.rows * this.game.enemySize;
         this.x = 0;
         this.y= -this.height;
-        this.speedX = 3;
+        this.speedX = 0.5;
         this.speedY = 0;
         this.enemies = [];
         this.create();
@@ -16,7 +16,6 @@ export class Wave{
     render(context){
         if (this.y < 0) this.y +=5;
         this.speedY = 0;
-        context.strokeRect(this.x,this.y,this.width, this.height);
         if (this.x < 0 || this.x > this.game.width - this.width){
             this.speedX *= -1;
             this.speedY = this.game.enemySize;
@@ -24,9 +23,10 @@ export class Wave{
         this.x +=this.speedX;
         this.y +=this.speedY
         this.enemies.forEach(enemy => {
-            enemy.update(this.x,this.y);
+            enemy.update(this.x,this.y,this.game.player);
             enemy.draw(context);
         })
+        this.enemies = this.enemies.filter(object => !object.markedForDeletion);
     }
     create(){
         console.log("methode creation des enemies");
@@ -39,5 +39,6 @@ export class Wave{
                 this.enemies.push(new Enemy(this.game, enemyX,enemyY));
             }
         }
+        console.log(this.enemies)
     }
 }
