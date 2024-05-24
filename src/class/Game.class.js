@@ -1,6 +1,6 @@
 
 import { Player } from './Player.class.js';
-import { Projectile } from './Projectile.class.js';
+import { Wave } from './Wave.class.js'
 
 export  class Game {
 
@@ -10,6 +10,15 @@ export  class Game {
         this.height = this.canvas.height;
         this.keys = [];
         this.Player = new Player(this);
+        
+        // settings wave 
+        this.columns = 3;
+        this.rows = 3;
+        this.enemySize = 60;
+
+        // creation wave 
+        this.wave = [];
+        this.wave.push(new Wave(this));
         
         
 
@@ -31,5 +40,9 @@ export  class Game {
         this.Player.draw(context);
         this.Player.update();
         this.Player.showProjectiles(context);
+        this.wave.forEach( wave =>{
+            wave.render(context);
+        })
+
     }
 }

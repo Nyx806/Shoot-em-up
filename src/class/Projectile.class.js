@@ -10,6 +10,7 @@ export class Projectile {
     }
     draw(context){
         if (!this.free){
+            context.fillStyle = 'white';
             context.fillRect(this.x,this.y,this.width, this.height)
         }
     }

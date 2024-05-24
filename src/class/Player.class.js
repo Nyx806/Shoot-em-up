@@ -15,6 +15,7 @@ export class Player {
         console.log(this.projectilePool);
     }
     draw(context){
+        // context.fillStyle = 'blue';
         context.fillRect(this.x, this.y, this.width, this.height);
     }
     update(){

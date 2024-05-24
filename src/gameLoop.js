@@ -6,12 +6,15 @@ window.addEventListener('load', function() {
     const ctx = canvas.getContext('2d');
     canvas.width = 600;
     canvas.height = 800;
-
+    ctx.fillStyle = 'white';
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 3;
     const game = new Game(canvas);
 
     function Animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         game.render(ctx);
+        
         requestAnimationFrame(Animate);
     }
     Animate();
