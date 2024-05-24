@@ -22,7 +22,24 @@ export class Enemy {
             if (!projectile.free && this.game.checkCollision(this,projectile)){
                 this.markedForDeletion = true;
                 projectile.restart();
+                if(!this.game.gameOver) this.game.score++;
             }
         });
+        // collision enemies - player
+        if (this.game.checkCollision(this,this.game.player)){
+            this.markedForDeletion = true;
+            if (!this.game.gameOver && this.game.score > 0){
+                this.game.score--;  
+            } 
+            this.game.lives--;
+            if (this.game.lives < 1){
+                this.game.gameOver = true;
+            } 
+        }
+        // lose condition
+        if (this.y +this.height > this.game.height){
+            this.game.gameOver = true;
+            this.markedForDeletion = true;
+        }
     }
 }

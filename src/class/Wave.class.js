@@ -8,8 +8,9 @@ export class Wave{
         this.height = this.game.rows * this.game.enemySize;
         this.x = 0;
         this.y= -this.height;
-        this.speedX = 0.5;
+        this.speedX = 1;
         this.speedY = 0;
+        this.nextWaveTrigger = false; 
         this.enemies = [];
         this.create();
     }

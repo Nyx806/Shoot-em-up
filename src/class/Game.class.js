@@ -12,14 +12,19 @@ export  class Game {
         this.player = new Player(this);
         
         // settings wave 
-        this.columns = 3;
-        this.rows = 3;
+        this.columns = 4;
+        this.rows = 4;
         this.enemySize = 60;
 
         // creation wave 
         this.wave = [];
         this.wave.push(new Wave(this));
         
+        // score
+        this.score = 0;
+        this.gameOver = false;
+        this.waveCount = 1;
+        this.lives = 4;
         
 
 
@@ -37,11 +42,18 @@ export  class Game {
 
     }
     render(context){
+        this.drawStatusText(context);
         this.player.draw(context);
         this.player.update();
         this.player.showProjectiles(context);
         this.wave.forEach( wave =>{
             wave.render(context);
+            if (wave.enemies.length < 1 && !wave.nextWaveTrigger && !this.gameOver){
+                this.newWave();
+                this.waveCount++
+                wave.nextWaveTrigger = true;
+                if (this.lives < 6) this.lives++;
+            }
         })
     }
     // collision detection between 2 retangles 
@@ -52,5 +64,29 @@ export  class Game {
             a.y < b.y + b.height &&
             a.y + a.height > b.y
         )
+    }
+    drawStatusText(context){
+        context.save();
+        context.fillText('Score : '+ this.score, 20,40)
+        context.fillText('wave : '+ this.waveCount, 20,80)
+        for(let i = 0;i < this.lives;i++){
+            context.fillRect(20 + 10*i, 100,5,20);
+        }
+        if(this.gameOver){
+            context.textAlign = 'center';
+            context.font = '100px Impact'
+            context.fillText('GAME OVER!', this.width * 0.5, this.height * 0.5)
+            context.font = '20px Impact'
+            context.fillText('Press R to restart', this.width * 0.5, this.height * 0.5 + 30)
+        }
+        context.restore();
+    }
+    newWave(){
+        if (Math.random() < 0.5 && this.columns * this.enemySize < this.width * 0.8){
+            this.columns++;
+        }else if( this.rows * this.enemySize < this.height * 0.6) {
+            this.rows++
+        }      
+        this.wave.push(new Wave(this));
     }
 }

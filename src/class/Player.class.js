@@ -7,7 +7,7 @@ export class Player {
         this.height = 100;
         this.x = this.game.width * 0.5 - this.width *0.5;    
         this.y = this.game.height - this.height;
-        this.speed = 15;
+        this.speed = 7;
         
         this.projectilePool = [];
         this.numberOfProjectile = 10;
