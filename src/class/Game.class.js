@@ -12,31 +12,35 @@ export  class Game {
         this.player = new Player(this);
         
         // settings wave 
-        this.columns = 4;
-        this.rows = 4;
+        this.columns = 2;
+        this.rows = 2;
         this.enemySize = 60;
 
         // creation wave 
         this.wave = [];
         this.wave.push(new Wave(this));
-        
+        this.waveCount = 1;
+
         // score
         this.score = 0;
         this.gameOver = false;
-        this.waveCount = 1;
-        this.lives = 4;
+
+        this.fired = false;
+        
         
 
 
         window.addEventListener('keydown', e =>{
+            if(e.key ==='a'&& !this.fired) this.player.shoot();
+            this.fired = true;
             if (this.keys.indexOf(e.key) === -1) this.keys.push(e.key);
-            console.log(e.key)
-            if(e.key ==='a') this.player.shoot();
+            if(e.key ==='r' && this.gameOver) this.restart();
         })
         window.addEventListener('keyup', e =>{
+            this.fired = false;
            const index = this.keys.indexOf(e.key);
            if (index >-1) this.keys.splice(index, 1);
-            console.log(this.keys);
+
             
         })
 
@@ -52,7 +56,7 @@ export  class Game {
                 this.newWave();
                 this.waveCount++
                 wave.nextWaveTrigger = true;
-                if (this.lives < 6) this.lives++;
+                if (this.player.lives < 6) this.player.lives++;
             }
         })
     }
@@ -69,7 +73,7 @@ export  class Game {
         context.save();
         context.fillText('Score : '+ this.score, 20,40)
         context.fillText('wave : '+ this.waveCount, 20,80)
-        for(let i = 0;i < this.lives;i++){
+        for(let i = 0;i < this.player.lives;i++){
             context.fillRect(20 + 10*i, 100,5,20);
         }
         if(this.gameOver){
@@ -88,5 +92,20 @@ export  class Game {
             this.rows++
         }      
         this.wave.push(new Wave(this));
+    }
+    restart(){
+        this.player.restart();
+
+        this.columns = 2;
+        this.rows = 2;
+        // creation wave 
+        this.wave = [];
+        this.wave.push(new Wave(this));
+        this.waveCount = 1;
+        
+        // score
+        this.score = 0;
+        this.gameOver = false;
+
     }
 }
