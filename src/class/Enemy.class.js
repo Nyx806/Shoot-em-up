@@ -31,8 +31,8 @@ export class Enemy {
             if (!this.game.gameOver && this.game.score > 0){
                 this.game.score--;  
             } 
-            this.game.lives--;
-            if (this.game.lives < 1){
+            this.game.player.lives--;
+            if (this.game.player.lives < 1){
                 this.game.gameOver = true;
             } 
         }

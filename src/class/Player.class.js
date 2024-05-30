@@ -13,6 +13,8 @@ export class Player {
         this.numberOfProjectile = 10;
         this.createProjectiles();
         console.log(this.projectilePool);
+
+        this.lives = 3;
     }
     draw(context){
         // context.fillStyle = 'blue';
@@ -50,5 +52,10 @@ export class Player {
             projectile.update();
             projectile.draw(context);
         })
+    }
+    restart(){
+        this.x = this.game.width * 0.5 - this.width *0.5;    
+        this.y = this.game.height - this.height;
+        this.lives = 3;
     }
 }
