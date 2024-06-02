@@ -1,4 +1,4 @@
-
+// bon taille pour chiara 20,30
 
 export class Enemy {
     constructor(game, positionX, positionY){
@@ -13,6 +13,7 @@ export class Enemy {
     }
     draw(context){
         context.strokeRect(this.x, this.y, this.width, this.height);
+        context.drawImage(this.image,0,0,20,30,this.x, this.y, this.width,this.height);
     }
     update(x,y,player){
         this.x = x + this.positionX;
