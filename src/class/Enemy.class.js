@@ -28,7 +28,10 @@ export class Enemy {
 
         if (this.lives < 1){
             this.markedForDeletion = true;
-            if(!this.game.gameOver) this.game.score += this.maxLives;
+            if(!this.game.gameOver){
+                this.game.score += this.maxLives;
+                if(!this.game.player.cooldown) this.game.player.energy += this.maxLives;
+            }
         }
 
         // collision enemies - player

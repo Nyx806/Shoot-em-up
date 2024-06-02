@@ -24,7 +24,6 @@ export class Projectile {
         this.x = x - this.width * 0.5;
         this.y = y;
         this.free = false;
-        console.log("la valeur de free est : " + this.free)
     }
     restart(){
         this.free = true;

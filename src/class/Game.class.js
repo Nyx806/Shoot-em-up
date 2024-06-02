@@ -19,7 +19,6 @@ export  class Game {
 
         // creation wave 
         this.wave = [];
-        //this.wave.push(new Wave(this));
         this.waveCount = 1;
 
         // score
@@ -44,10 +43,13 @@ export  class Game {
 
 
         window.addEventListener('keydown', e =>{
-            if(e.key ==='a'&& !this.fired) this.player.shoot();
-            this.fired = true;
-            if (this.keys.indexOf(e.key) === -1) this.keys.push(e.key);
-            if(e.key ==='r' && this.gameOver) this.restart();
+            if(!this.start){
+                if(e.key ==='a'&& !this.fired) this.player.shoot();
+                this.fired = true;
+                if (this.keys.indexOf(e.key) === -1) this.keys.push(e.key);
+                if(e.key ==='r' && this.gameOver) this.restart();
+            }
+
             if(e.key ==='Enter' && this.start) {
                 this.start = false;
                 this.restart(); 
@@ -121,6 +123,11 @@ export  class Game {
             context.fillText('WELCOME', this.width * 0.5, this.height * 0.5)
             context.font = '20px Impact'
             context.fillText('Press Enter to start', this.width * 0.5, this.height * 0.5 + 30)
+            context.fillText('left arrow : move left', this.width * 0.5, this.height * 0.5 + 60)
+            context.fillText('right arrow : move right', this.width * 0.5, this.height * 0.5 + 80)
+            context.fillText('a : little projectiles', this.width * 0.5, this.height * 0.5 + 100)
+            context.fillText('z : small laser', this.width * 0.5, this.height * 0.5 + 120)
+            context.fillText('e : big laser', this.width * 0.5, this.height * 0.5 + 140)
         }
 
         if(this.gameOver){
@@ -148,7 +155,6 @@ export  class Game {
         }
 
         this.wave = this.wave.filter(object => !object.markedForDeletion);
-        console.log(this.wave);
     }
     restart(){
         if(!this.start){

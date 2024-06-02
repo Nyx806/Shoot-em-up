@@ -46,6 +46,5 @@ export class Wave{
             }
                 
         }
-        console.log(this.enemies)
     }
 }
