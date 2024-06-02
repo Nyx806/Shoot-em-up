@@ -37,7 +37,9 @@ export class Player {
     }
     update() {
         //energy
-        if(this.energy < this.maxEnergy) this.energy += 0.05;
+        if(!this.game.start){
+            if(this.energy < this.maxEnergy) this.energy += 0.05;
+        }
         if(this.energy < 1 )this.cooldown = true;
         else if (this.energy > this.maxEnergy * 0.2)this.cooldown = false;
         // horizontal movement

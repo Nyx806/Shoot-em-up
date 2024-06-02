@@ -26,6 +26,9 @@ export  class Game {
         this.score = 0;
         this.gameOver = false;
 
+        // start 
+        this.start = true;
+
         this.fired = false;
 
         this.bossArray = [];
@@ -45,13 +48,15 @@ export  class Game {
             this.fired = true;
             if (this.keys.indexOf(e.key) === -1) this.keys.push(e.key);
             if(e.key ==='r' && this.gameOver) this.restart();
+            if(e.key ==='Enter' && this.start) {
+                this.start = false;
+                this.restart(); 
+            } 
         })
         window.addEventListener('keyup', e =>{
             this.fired = false;
            const index = this.keys.indexOf(e.key);
-           if (index >-1) this.keys.splice(index, 1);
-
-            
+           if (index >-1) this.keys.splice(index, 1); 
         })
 
     }
@@ -110,6 +115,13 @@ export  class Game {
         }
         context.restore();
 
+        if (this.start){
+            context.textAlign = 'center';
+            context.font = '100px Impact'
+            context.fillText('WELCOME', this.width * 0.5, this.height * 0.5)
+            context.font = '20px Impact'
+            context.fillText('Press Enter to start', this.width * 0.5, this.height * 0.5 + 30)
+        }
 
         if(this.gameOver){
             context.textAlign = 'center';
@@ -139,19 +151,21 @@ export  class Game {
         console.log(this.wave);
     }
     restart(){
-        this.player.restart();
-
-        this.columns = 2;
-        this.rows = 2;
-        // creation wave 
-        this.wave = [];
-        this.wave.push(new Wave(this));
-        this.waveCount = 1;
-        //boss
-        this.bossArray = [];
-        // score
-        this.score = 0;
-        this.gameOver = false;
+        if(!this.start){
+            this.player.restart();
+    
+            this.columns = 2;
+            this.rows = 2;
+            // creation wave 
+            this.wave = [];
+            this.wave.push(new Wave(this));
+            this.waveCount = 1;
+            //boss
+            this.bossArray = [];
+            // score
+            this.score = 0;
+            this.gameOver = false;
+        }
 
     }
 }
