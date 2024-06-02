@@ -1,5 +1,6 @@
 
 import { Enemy } from './Enemy.class.js'
+import { Chara } from './Chara.class.js';
 
 export class Wave{
     constructor(game){
@@ -37,7 +38,7 @@ export class Wave{
                 console.log("boucle creation des enemies");
                 let enemyX = x * this.game.enemySize;
                 let enemyY = y * this.game.enemySize;
-                this.enemies.push(new Enemy(this.game, enemyX,enemyY));
+                this.enemies.push(new  Chara(this.game, enemyX,enemyY));
             }
         }
         console.log(this.enemies)
