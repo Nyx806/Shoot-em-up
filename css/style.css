@@ -6,3 +6,7 @@
     transform : translate(-50%, -50%);
     background: url('../assets/backgroud1.png');
 }
+
+#chara{
+    display: none;
+}
