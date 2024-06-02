@@ -7,6 +7,6 @@
     background: url('../assets/backgroud1.png');
 }
 
-#chara{
+#chara, #sans, #flowey{
     display: none;
 }

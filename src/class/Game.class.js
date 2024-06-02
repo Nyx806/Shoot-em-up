@@ -1,5 +1,5 @@
 
-import { Player } from './Player.class.js';
+import { Player } from "./Player.js";
 import { Wave } from './Wave.class.js'
 
 export  class Game {

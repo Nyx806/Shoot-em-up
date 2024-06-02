@@ -1,4 +1,4 @@
-// bon taille pour chiara 20,30
+ 
 
 export class Enemy {
     constructor(game, positionX, positionY){
@@ -12,7 +12,7 @@ export class Enemy {
         this.markedForDeletion = false;
     }
     draw(context){
-        context.strokeRect(this.x, this.y, this.width, this.height);
+        // context.strokeRect(this.x, this.y, this.width, this.height);
         context.drawImage(this.image,0,0,20,30,this.x, this.y, this.width,this.height);
     }
     update(x,y,player){
@@ -21,11 +21,16 @@ export class Enemy {
         // check collision enemies - projectiles
         player.projectilePool.forEach( projectile => {
             if (!projectile.free && this.game.checkCollision(this,projectile)){
-                this.markedForDeletion = true;
+                this.hit(1);
                 projectile.restart();
-                if(!this.game.gameOver) this.game.score++;
             }
         });
+
+        if (this.lives < 1){
+            this.markedForDeletion = true;
+            if(!this.game.gameOver) this.game.score += this.maxLives;
+        }
+
         // collision enemies - player
         if (this.game.checkCollision(this,this.game.player)){
             this.markedForDeletion = true;
@@ -42,5 +47,8 @@ export class Enemy {
             this.game.gameOver = true;
             this.markedForDeletion = true;
         }
+    }
+    hit (damage){
+        this.lives -= damage;
     }
 }
