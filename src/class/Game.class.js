@@ -1,5 +1,5 @@
 
-import { Player } from "./Player.js";
+import { Player } from "./Player.class.js";
 import { Wave } from './Wave.class.js'
 import { Boss } from "./Boss.class.js";
 
@@ -31,6 +31,11 @@ export  class Game {
         this.bossArray = [];
         this.bossLives = 10;
         this.restart();
+
+        //framerate 
+        this.spriteUpdate = false;
+        this.spriteTimer = 0;
+        this.spriteInterval = 150;
         
         
 
@@ -50,9 +55,17 @@ export  class Game {
         })
 
     }
-    render(context){
-        this.drawStatusText(context);
+    render(context, deltaTime){
+        // sprite timing 
+        if (this.spriteTimer > this.spriteInterval){
+            this.spriteUpdate = true;
+            this.spriteTimer = 0;
+        }else {
+            this.spriteUpdate = false;
+            this.spriteTimer += deltaTime;
+        }
 
+        this.drawStatusText(context);
         this.bossArray.forEach(boss => {
             boss.draw(context);
             boss.update();
@@ -81,11 +94,23 @@ export  class Game {
     }
     drawStatusText(context){
         context.save();
+        context.shadowOffsetX = 2;
+        context.shadowOffsetY = 2;
+        context.shadowColor = 'black';
         context.fillText('Score : '+ this.score, 20,40)
         context.fillText('wave : '+ this.waveCount, 20,80)
         for(let i = 0;i < this.player.lives;i++){
             context.fillRect(20 + 10*i, 100,5,20);
         }
+        // energy 
+        context.save();
+        this.player.cooldown ? context.fillStyle = 'red' : context.fillStyle = 'gold';
+        for(let i = 0; i < this.player.energy; i++){
+            context.fillRect(20 + 2 * i, 130, 2, 15);
+        }
+        context.restore();
+
+
         if(this.gameOver){
             context.textAlign = 'center';
             context.font = '100px Impact'
