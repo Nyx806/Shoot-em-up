@@ -14,6 +14,7 @@ export class Wave{
         this.speedY = 0;
         this.nextWaveTrigger = false; 
         this.enemies = [];
+        this.markedForDeletion = false;
         this.create();
     }
     render(context){
@@ -30,16 +31,15 @@ export class Wave{
             enemy.draw(context);
         })
         this.enemies = this.enemies.filter(object => !object.markedForDeletion);
+        // clean unused tab 
+        if (this.enemies.length <= 0) this.markedForDeletion = true;
     }
     create(){
-        console.log("methode creation des enemies");
         for (let y = 0; y < this.game.rows; y++){
-            console.log("première boucle de creation des enemies creation des enemies");
             for (let x = 0; x < this.game.columns; x++){
-                console.log("boucle creation des enemies");
                 let enemyX = x * this.game.enemySize;
                 let enemyY = y * this.game.enemySize;
-                
+
                 if (Math.random() <0.4){
                     this.enemies.push(new  Chara(this.game, enemyX,enemyY));
                 }else {

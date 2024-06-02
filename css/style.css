@@ -11,6 +11,6 @@ body{
     background: url('../assets/backgroud1.png');
 }
 
-#chara, #sans, #flowey{
+#chara, #sans, #flowey, #Undyne{
     display: none;
 }
