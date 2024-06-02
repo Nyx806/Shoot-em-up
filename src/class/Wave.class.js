@@ -1,6 +1,6 @@
 
-import { Enemy } from './Enemy.class.js'
 import { Chara } from './Chara.class.js';
+import { Flowey } from './Flowey.class.js';
 
 export class Wave{
     constructor(game){
@@ -38,8 +38,13 @@ export class Wave{
                 console.log("boucle creation des enemies");
                 let enemyX = x * this.game.enemySize;
                 let enemyY = y * this.game.enemySize;
-                this.enemies.push(new  Chara(this.game, enemyX,enemyY));
+                if (Math.random() < 0.4 ){
+                    this.enemies.push(new Chara(this.game, enemyX,enemyY));   
+                }else {
+                    this.enemies.push(new Flowey(this.game, enemyX,enemyY));
+                }
             }
+                
         }
         console.log(this.enemies)
     }
