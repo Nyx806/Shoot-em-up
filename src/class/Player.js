@@ -14,12 +14,12 @@ export class Player {
         this.projectilePool = [];
         this.numberOfProjectile = 10;
         this.createProjectiles();
-        console.log(this.projectilePool);
 
         this.lives = 3;
+        this.maxLives = 10;
     }
     draw(context) {
-        
+
         context.drawImage(this.image,this.x, this.y, this.width,this.height);
     }
     update() {
@@ -34,7 +34,6 @@ export class Player {
     shoot() {
         const projectile = this.getProjectile();
         if (projectile) projectile.start(this.x + this.width * 0.5, this.y);
-        console.log(this.x, this.y, projectile.free);
     }
     // create projectiles object pool 
     createProjectiles() {
@@ -44,7 +43,6 @@ export class Player {
     }
     // get a free projectile from the pool
     getProjectile() {
-        console.log("entré dans la methode getProjectile");
         for (let i = 0; i < this.projectilePool.length; i++) {
             if (this.projectilePool[i].free) return this.projectilePool[i];
         }

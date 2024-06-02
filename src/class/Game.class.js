@@ -1,6 +1,7 @@
 
 import { Player } from "./Player.js";
 import { Wave } from './Wave.class.js'
+import { Boss } from "./Boss.class.js";
 
 export  class Game {
 
@@ -18,7 +19,7 @@ export  class Game {
 
         // creation wave 
         this.wave = [];
-        this.wave.push(new Wave(this));
+        //this.wave.push(new Wave(this));
         this.waveCount = 1;
 
         // score
@@ -26,6 +27,10 @@ export  class Game {
         this.gameOver = false;
 
         this.fired = false;
+
+        this.bossArray = [];
+        this.bossLives = 10;
+        this.restart();
         
         
 
@@ -47,6 +52,12 @@ export  class Game {
     }
     render(context){
         this.drawStatusText(context);
+
+        this.bossArray.forEach(boss => {
+            boss.draw(context);
+            boss.update();
+        })
+        this.bossArray = this.bossArray.filter(object => !object.markedForDeletion);
         this.player.draw(context);
         this.player.update();
         this.player.showProjectiles(context);
@@ -54,9 +65,8 @@ export  class Game {
             wave.render(context);
             if (wave.enemies.length < 1 && !wave.nextWaveTrigger && !this.gameOver){
                 this.newWave();
-                this.waveCount++
                 wave.nextWaveTrigger = true;
-                if (this.player.lives < 6) this.player.lives++;
+                
             }
         })
     }
@@ -86,12 +96,22 @@ export  class Game {
         context.restore();
     }
     newWave(){
-        if (Math.random() < 0.5 && this.columns * this.enemySize < this.width * 0.8){
-            this.columns++;
-        }else if( this.rows * this.enemySize < this.height * 0.6) {
-            this.rows++
-        }      
-        this.wave.push(new Wave(this));
+        this.waveCount++
+        if (this.player.lives < this.player.maxLives) this.player.lives++;
+        // boss aparition 
+        if (this.waveCount % 3 === 0){
+            this.bossArray.push(new Boss(this, this.bossLives));
+        }else {
+            if (Math.random() < 0.5 && this.columns * this.enemySize < this.width * 0.8){
+                this.columns++;
+            }else if( this.rows * this.enemySize < this.height * 0.6) {
+                this.rows++
+            }      
+            this.wave.push(new Wave(this));
+        }
+
+        this.wave = this.wave.filter(object => !object.markedForDeletion);
+        console.log(this.wave);
     }
     restart(){
         this.player.restart();
@@ -102,7 +122,8 @@ export  class Game {
         this.wave = [];
         this.wave.push(new Wave(this));
         this.waveCount = 1;
-        
+        //boss
+        this.bossArray = [];
         // score
         this.score = 0;
         this.gameOver = false;
