@@ -44,10 +44,10 @@ export  class Game {
 
         window.addEventListener('keydown', e =>{
             if(!this.start){
-                if(e.key ==='a'&& !this.fired) this.player.shoot();
+                if(e.key ==='a' || e.key === 'A'&& !this.fired) this.player.shoot();
                 this.fired = true;
                 if (this.keys.indexOf(e.key) === -1) this.keys.push(e.key);
-                if(e.key ==='r' && this.gameOver) this.restart();
+                if(e.key ==='r' || e.key === 'R' && this.gameOver) this.restart();
             }
 
             if(e.key ==='Enter' && this.start) {

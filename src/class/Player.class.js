@@ -28,9 +28,9 @@ export class Player {
         this.maxLives = 10;
     }
     draw(context) {
-        if(this.game.keys.indexOf('z') > -1){
+        if(this.game.keys.indexOf('z') > -1 || this.game.keys.indexOf('Z') > -1){
             this.smallLaser.render(context);
-        }else if (this.game.keys.indexOf('e') > -1){
+        }else if (this.game.keys.indexOf('e') > -1 || this.game.keys.indexOf('E') > -1){
             this.bigLaser.render(context);
         }
         context.drawImage(this.image,this.x, this.y, this.width,this.height);
